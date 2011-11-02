@@ -103,14 +103,17 @@ sub read_request {
   $self->app->log->debug('Reading FastCGI request.') if DEBUG;
 
   # Transaction
-  my $tx = $self->on_transaction->($self);
+  my $tx =
+      $self->can('build_tx')
+    ? $self->build_tx
+    : $self->on_transaction->($self);
   $tx->connection($c);
   my $req = $tx->req;
 
   # Type
   my ($type, $id, $body) = $self->read_record($c);
   unless ($type && $type eq 'BEGIN_REQUEST') {
-    $self->app->log->error("First FastCGI record wasn't a begin request.");
+    $self->app->log->info("First FastCGI record wasn't a begin request.");
     return;
   }
   $ENV{FCGI_ID} = $tx->{fcgi_id} = $id;
@@ -207,19 +210,21 @@ sub run {
 
     # Error
     unless ($tx) {
-      $self->app->log->error("No transaction for FastCGI request.");
+      $self->app->log->info("No transaction for FastCGI request.");
       next;
     }
 
     # Handle
     $self->app->log->debug('Handling FastCGI request.') if DEBUG;
-    $self->on_request->($self, $tx);
+    $self->can('emit')
+      ? $self->emit(request => $tx)
+      : $self->on_request->($self, $tx);
 
     # Response
     $self->write_response($tx);
 
     # Finish transaction
-    $tx->on_finish->($tx);
+    $tx->server_close;
   }
 }
 
