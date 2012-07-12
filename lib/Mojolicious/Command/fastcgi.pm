@@ -1,7 +1,9 @@
 package Mojolicious::Command::fastcgi;
-use Mojo::Base 'Mojo::Command';
+use Mojo::Base 'Mojolicious::Command';
 
 use Mojo::Server::FastCGI;
+
+our $VERSION = '0.3';
 
 has description => <<'EOF';
 Start application with FastCGI.
