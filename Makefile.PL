@@ -22,9 +22,9 @@ my %WriteMakefileArgs = (
   "LICENSE" => "artistic_2",
   "NAME" => "Mojo::Server::FastCGI",
   "PREREQ_PM" => {
-    "Mojolicious" => "3.0"
+    "Mojolicious" => "3.21"
   },
-  "VERSION" => "0.3",
+  "VERSION" => "0.4",
   "test" => {
     "TESTS" => "t/mojo/*.t"
   }
