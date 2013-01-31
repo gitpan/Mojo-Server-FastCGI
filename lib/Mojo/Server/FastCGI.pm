@@ -6,7 +6,7 @@ use IO::Socket;
 
 use constant DEBUG => $ENV{MOJO_FASTCGI_DEBUG} || 0;
 
-our $VERSION = '0.4';
+our $VERSION = '0.41';
 
 # Roles
 my @ROLES = qw/RESPONDER  AUTHORIZER FILTER/;
@@ -245,7 +245,7 @@ sub type_number {
 sub write_records {
   my ($self, $c, $type, $id, $body) = @_;
   return unless defined $c && defined $type && defined $id;
-  $body ||= '';
+  $body //= '';
 
   # Write records
   my $empty    = $body ? 0 : 1;

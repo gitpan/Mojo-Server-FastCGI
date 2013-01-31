@@ -12,6 +12,7 @@ my %WriteMakefileArgs = (
   "ABSTRACT" => "FastCGI Server",
   "AUTHOR" => "\303\201rp\303\241d Sz\303\241sz <arpad.szasz\@plenum.ro>",
   "BUILD_REQUIRES" => {
+    "File::Slurp" => 0,
     "Test::More" => 0
   },
   "CONFIGURE_REQUIRES" => {
@@ -24,7 +25,7 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "Mojolicious" => "3.21"
   },
-  "VERSION" => "0.4",
+  "VERSION" => "0.41",
   "test" => {
     "TESTS" => "t/mojo/*.t"
   }
